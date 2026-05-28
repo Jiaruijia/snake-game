@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>霓虹贪吃蛇</title>
+    <title>贪吃蛇</title>
     <style>
         * {
             margin: 0;
@@ -12,13 +12,13 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            background: #fafafa;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             overflow: hidden;
             touch-action: none;
         }
@@ -28,48 +28,41 @@
         }
 
         h1 {
-            color: #00f0ff;
-            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            font-weight: 400;
+            letter-spacing: 2px;
         }
 
         .score-board {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            gap: 40px;
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .score-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 25px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
         }
 
         .score-label {
-            color: #888;
-            font-size: 0.8rem;
+            color: #999;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
         }
 
         .score-value {
-            color: #ff00ff;
+            color: #333;
             font-size: 1.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px #ff00ff;
+            font-weight: 300;
         }
 
         #gameCanvas {
-            border: 3px solid #00f0ff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3),
-                        inset 0 0 60px rgba(0, 240, 255, 0.1);
-            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #e0e0e0;
             display: block;
             margin: 0 auto;
         }
@@ -79,11 +72,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            border: 2px solid #ff0066;
-            box-shadow: 0 0 50px rgba(255, 0, 102, 0.5);
+            background: #fff;
+            padding: 40px 60px;
+            border: 1px solid #e0e0e0;
             text-align: center;
             display: none;
             z-index: 100;
@@ -94,51 +85,50 @@
         }
 
         .game-over h2 {
-            color: #ff0066;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px #ff0066;
+            color: #333;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            font-weight: 400;
         }
 
         .game-over p {
-            color: #ccc;
-            margin-bottom: 30px;
+            color: #666;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
         }
 
         .restart-btn {
-            background: linear-gradient(135deg, #ff0066, #ff00ff);
-            color: white;
+            background: #333;
+            color: #fff;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 30px;
+            padding: 10px 32px;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
+            transition: background 0.2s;
+            letter-spacing: 1px;
         }
 
         .restart-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 40px rgba(255, 0, 102, 0.8);
+            background: #555;
         }
 
         .instructions {
-            color: #666;
+            color: #999;
             margin-top: 20px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.25rem;
             }
 
             .score-board {
-                max-width: 320px;
+                gap: 30px;
             }
 
             .score-value {
-                font-size: 1.2rem;
+                font-size: 1.25rem;
             }
 
             #gameCanvas {
@@ -150,7 +140,7 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>霓虹贪吃蛇</h1>
+        <h1>贪吃蛇</h1>
         <div class="score-board">
             <div class="score-item">
                 <div class="score-label">分数</div>
@@ -166,8 +156,8 @@
     </div>
 
     <div class="game-over" id="gameOver">
-        <h2>游戏结束!</h2>
-        <p>你的分数: <span id="finalScore">0</span></p>
+        <h2>游戏结束</h2>
+        <p>分数: <span id="finalScore">0</span></p>
         <button class="restart-btn" onclick="restartGame()">再来一局</button>
     </div>
 
@@ -235,66 +225,46 @@
 
         // 绘制游戏
         function drawGame() {
-            // 清空画布
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            // 清空画布 - 白色背景
+            ctx.fillStyle = '#fafafa';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制网格线
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= tileCount; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i * gridSize);
+                ctx.lineTo(canvas.width, i * gridSize);
+                ctx.stroke();
+            }
 
             // 绘制蛇
             snake.forEach((segment, index) => {
-                const gradient = ctx.createRadialGradient(
-                    segment.x * gridSize + gridSize / 2,
-                    segment.y * gridSize + gridSize / 2,
-                    0,
-                    segment.x * gridSize + gridSize / 2,
-                    segment.y * gridSize + gridSize / 2,
-                    gridSize / 2
-                );
-
-                if (index === 0) {
-                    gradient.addColorStop(0, '#00ffff');
-                    gradient.addColorStop(1, '#0088aa');
-                } else {
-                    gradient.addColorStop(0, '#ff00ff');
-                    gradient.addColorStop(1, '#880088');
-                }
-
-                ctx.fillStyle = gradient;
-                ctx.shadowColor = index === 0 ? '#00ffff' : '#ff00ff';
-                ctx.shadowBlur = 10;
+                ctx.fillStyle = index === 0 ? '#333' : '#666';
                 ctx.fillRect(
                     segment.x * gridSize + 1,
                     segment.y * gridSize + 1,
                     gridSize - 2,
                     gridSize - 2
                 );
-                ctx.shadowBlur = 0;
             });
 
-            // 绘制食物
-            const foodGradient = ctx.createRadialGradient(
-                food.x * gridSize + gridSize / 2,
-                food.y * gridSize + gridSize / 2,
-                0,
-                food.x * gridSize + gridSize / 2,
-                food.y * gridSize + gridSize / 2,
-                gridSize / 2
-            );
-            foodGradient.addColorStop(0, '#ffff00');
-            foodGradient.addColorStop(1, '#ff8800');
-
-            ctx.fillStyle = foodGradient;
-            ctx.shadowColor = '#ffff00';
-            ctx.shadowBlur = 15;
+            // 绘制食物 - 简单红色圆点
+            ctx.fillStyle = '#e74c3c';
             ctx.beginPath();
             ctx.arc(
                 food.x * gridSize + gridSize / 2,
                 food.y * gridSize + gridSize / 2,
-                gridSize / 2 - 2,
+                gridSize / 2 - 4,
                 0,
                 Math.PI * 2
             );
             ctx.fill();
-            ctx.shadowBlur = 0;
         }
 
         // 游戏循环
@@ -424,7 +394,6 @@
 
         // 窗口调整
         window.addEventListener('resize', () => {
-            const oldSize = canvas.width;
             resizeCanvas();
             if (!gameRunning) drawGame();
         });
